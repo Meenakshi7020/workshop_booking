@@ -1,20 +1,84 @@
-# **Workshop Booking**
+# Workshop Booking
 
-> This website is for coordinators to book a workshop(s), they can book a workshop based on instructors posts or can propose a workshop date based on their convenience.
+This is the **FOSSEE Workshop Booking** project.  
+It is a Django-based web application for managing and viewing workshop details, featuring a modern UI with animated gradients and styled login page.
+
+---
+
+## Features
+
+- Login page with animated gradient background and styled login box
+- Responsive navbar and footer
+- Quote section with animated gradient text
+- Workshop listing and statistics pages
+- Modern UI enhancements for better user experience
+
+---
+
+## Setup Instructions
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/Meenakshi7020/workshop_booking.git
+Navigate to the project folder
+
+cd workshop_booking
 
 
-### Features
-* Statistics
-    1. Instructors Only
-        * Monthly Workshop Count
-        * Instructor/Coordinator Profile stats
-        * Upcoming Workshops
-        * View/Post comments on Coordinator's Profile
-    2. Open to All
-        * Workshops taken over Map of India
-        * Pie chart based on Total Workshops taken to Type of Workshops.
+Create a virtual environment
 
-* Workshop Related Features
-    > Instructors can Accept, Reject or Delete workshops based on their preference, also they can postpone a workshop based on coordinators request.
+python -m venv venv
 
-__NOTE__: Check docs/Getting_Started.md for more info.
+
+Activate the virtual environment:
+
+Windows:
+
+venv\Scripts\activate
+
+
+Linux/Mac:
+
+source venv/bin/activate
+
+
+Install dependencies
+
+pip install -r requirements.txt
+
+
+Apply database migrations
+
+python manage.py migrate
+
+
+Run the development server
+
+python manage.py runserver
+
+
+Open in your browser
+
+http://127.0.0.1:8000
+
+Project Structure
+workshop_booking/
+├── workshop_app/        # Django app
+│   ├── static/          # CSS, JS, images
+│   └── templates/       # HTML templates
+├── manage.py
+├── db.sqlite3           # Database
+├── requirements.txt
+└── README.md
+Notes
+
+Ensure you have Python 3.8+ installed.
+
+This project uses Django 3.x or above.
+
+All static files are included in workshop_app/static.
+
+Author
+
+Meenakshi Kshirsagar
+Developed as part of FOSSEE Internship Task
