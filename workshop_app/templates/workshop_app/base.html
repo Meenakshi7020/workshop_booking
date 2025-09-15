@@ -1,135 +1,55 @@
-<!DOCTYPE html>
-<html>
 {% load static %}
-{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        {% block title %}
-            HomePage
-        {% endblock %}
-    </title>
+    <meta charset="UTF-8">
+    <title>{% block title %}FOSSEE Workshops{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="{% static 'workshop_app/js/jquery-3.4.1.min.js' %}"></script>
-    <script src="{% static 'workshop_app/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'workshop_app/js/popper.min.js' %}"></script>
-    <script src="{% static 'workshop_app/js/toastr.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-    {% block extra-dependencies %}
-    {% endblock %}
-
-    <link rel="stylesheet" href="{% static 'workshop_app/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'workshop_app/css/toastr.min.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'workshop_app/css/base.css' %}" type="text/css"/>
-    <link rel="stylesheet" href="{% static 'workshop_app/css/font-awesome.css' %}" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
-
-    {% block extra-custom-scripts %}
-    {% endblock %}
-
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'workshop_app/css/base.css' %}?v=2">
 </head>
-
 <body>
-{% block header %}
-    <nav class="navbar navbar-dark navbar-expand-lg bg-dark fixed-top">
-        {% if user.is_authenticated %}
-        <a class="navbar-brand text-white" href="{% url 'workshop_app:index' %}">FOSSEE Workshops</a>
-        {% else %}
-        <a class="navbar-brand text-white" href="{{request.scheme}}://{{request.get_host}}">FOSSEE Workshops</a>
-        {% endif %}
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="/">
-                        Home
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'statistics_app:public' %}">
-                        Workshop Statistics
-                    </a>
-                </li>
-            </ul>
-            {% if user.is_authenticated %}
-            <ul class="navbar-nav mr-auto">
-                {% if request.user|has_group:"instructor" %}
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'statistics_app:team' %}">
-                        Team Statistics
-                    </a>
-                </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'workshop_app:workshop_status_instructor' %}">
-                        Workshop Status
-                    </a>
-                </li>
-                {% if not request.user|has_group:"instructor" %}
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'workshop_app:propose_workshop' %}">
-                            Propose Workshop
-                        </a>
-                    </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'workshop_app:workshop_type_list' %}">
-                        Workshop Types
-                    </a>
-                </li>
-            </ul>
-            <div class="my-2 my-lg-0">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                           <span class="material-icons" style="vertical-align: middle">account_circle</span>
-                            <p style="display: inline; vertical-align: middle">
-                                {{user.get_full_name|title}}
-                            </p>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'workshop_app:view_own_profile' %}">Profile</a>
-                            <a class="dropdown-item" href="{% url 'password_change' %}">
-                                 Change Password
-                            </a>
-                            <a class="dropdown-item" href="{% url 'workshop_app:logout' %}">Logout</a>
-                        </div>
-                    </li>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'workshop_app:index' %}">FOSSEE Workshops</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto" role="menubar">
+                    <li class="nav-item" role="none"><a class="nav-link" href="{% url 'workshop_app:index' %}" role="menuitem">Home</a></li>
+                    <li class="nav-item" role="none"><a class="nav-link" href="{% url 'statistics_app:public' %}" role="menuitem">Workshop Statistics</a></li>
                 </ul>
             </div>
-            {% endif %}
         </div>
     </nav>
-{% endblock %}
 
-<div class="base-content">
-    {% block content %}
-        <h1>Base Template Content. Please override me</h1>
-    {% endblock %}
-</div>
+    <!-- Page Content -->
+    <main role="main" class="base-content">
+        <!-- Quoted Text Section -->
+        <div class="quote-text">
+            "Unlock your potential with FOSSEE Workshops!"
+        </div>
 
-<script>
-    {% if messages %}
-        {% for message in messages %}
-            toastr[{% if message.tags %} "{{ message.tags }}" {% else %} "info" {% endif %}]("{{ message }}");
-        {% endfor %}
-    {% endif %}
-</script>
+        {% block content %}{% endblock %}
+    </main>
 
+    <!-- Footer -->
+    <footer class="footer d-flex justify-content-end align-items-center px-3 py-2" style="position: fixed; bottom: 0; right: 0; width: auto; max-width: 300px; border-radius: 8px 0 0 8px; background: rgba(97, 97, 95, 0.85); box-shadow: -2px -2px 8px rgba(0,0,0,0.2);">
+        <p class="mb-0 small text-white">Developed by <b>FOSSEE group, IIT Bombay</b></p>
+        <p class="mb-0 fst-italic small text-light ms-2">Empowering Open Source Education</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<footer class="footer">
-    {% block footer %}
-       <div class="container">
-           Developed by FOSSEE group, IIT Bombay
-       </div> 
-    {% endblock %}
-</footer>
 </html>

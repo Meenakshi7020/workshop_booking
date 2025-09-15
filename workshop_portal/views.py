@@ -1,5 +1,4 @@
-# Django Imports
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.conf import settings
 
@@ -14,3 +13,8 @@ def index(request):
     else:
         redirect_url = reverse("workshop_app:index")
     return redirect(redirect_url)
+
+
+# ✅ New View for Statistics
+def statistics(request):
+    return render(request, 'workshop_app/statistics.html')

@@ -1,53 +1,107 @@
 {% extends 'workshop_app/base.html' %}
 
-{% block title %}
-    Login
-{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-md-offset-6">
-                <div class="card">
-                    <div class="card-body">
-                        <form class="px-3 py-3" method="post">
-                        {% csrf_token %}
-                        {% if form.errors %}
-                            {% for field in form %}
-                                {% for error in field.errors %}
-                                    <div class="alert alert-dismissible alert-danger">
-                                        <button type="button" class="close" data-dismiss="alert">
-                                            <i class="fa fa-close"></i>
-                                        </button>
-                                        <strong>{{ error|escape }}</strong>
-                                    </div>
-                                {% endfor %}
-                            {% endfor %}
-                            {% for error in form.non_field_errors %}
-                                <div class="alert alert-dismissible alert-danger">
-                                    <button type="button" class="close" data-dismiss="alert">
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                    <strong>{{ error|escape }}</strong>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                        <div class="form-group">
-                          <label for="id_username">Username</label>
-                          {{ form.username }}
-                        </div>
-                        <div class="form-group">
-                          <label for="id_password">Password</label>
-                          {{ form.password }}
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sign in</button>
-                        </form>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'workshop_app:register' %}">New around here? Sign up</a>
-                        <a class="dropdown-item" href="{% url 'password_reset' %}">Forgot password?</a>
-                    </div>
-                </div>  
-            </div>
+<style>
+  body {
+    background: linear-gradient(135deg, #d6d9f7, #b0b7f2);
+  }
+  .login-box {
+    max-width: 400px;
+    margin: 5rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  .login-box h2 {
+    font-weight: 700;
+    color: #3a3f9f;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .form-group label {
+    display: block;
+    text-align: left;
+    margin-bottom: 0.5rem;
+    color: #3a3f9f;
+    font-weight: 600;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 1.5px solid #8a8edb;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #3a3f9f;
+  }
+  .form-group input::placeholder {
+    color: #a3a7d1;
+  }
+  .btn-primary {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1.5rem;
+    background: linear-gradient(90deg, #3a3f9f, #6c72e6);
+    border: none;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    box-shadow: 0 8px 15px rgba(58,63,159,0.4);
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(90deg, #2a2e7f, #4a4ec6);
+  }
+  .text-center a {
+    display: block;
+    margin-top: 1rem;
+    color: #3a3f9f;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .text-center a:hover {
+    text-decoration: underline;
+  }
+  footer.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    max-width: 350px;
+    background: rgba(97, 97, 95, 0.85);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px 0 0 8px;
+    box-shadow: -2px -2px 8px rgba(0,0,0,0.2);
+    font-size: 0.8rem;
+    text-align: right;
+  }
+</style>
+
+<div class="login-box card">
+    <h2>SIGN IN</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-danger">Invalid username or password</div>
+        {% endif %}
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Username:</label>
+            {{ form.username }}
         </div>
+        <div class="form-group">
+            <label for="{{ form.password.id_for_label }}">Password:</label>
+            {{ form.password }}
+        </div>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+    </form>
+    <div class="text-center">
+        <a href="{% url 'workshop_app:register' %}">New here? Sign up</a>
+        <a href="{% url 'password_reset' %}">Forgot password?</a>
     </div>
+</div>
 {% endblock %}
